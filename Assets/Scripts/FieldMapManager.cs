@@ -101,7 +101,7 @@ public class FieldMapManager : MonoBehaviour {
             EnterMapStateTwo();
         }
         
-        //ClearStage();
+        ClearStage();
     }
 
     private void Update()
