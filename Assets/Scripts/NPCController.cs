@@ -46,8 +46,8 @@ public class NPCController : MonoBehaviour {
                     // do this for each phase
                     label.text = name.Replace("(Clone)","") + "\nAlgorithm: Follow Leader"; 
                 }
-                linear = ai.Pursue();   // For example
-                angular = ai.Face();    // For example
+                //linear = ai.FollowLeader();   // For example
+                //angular = ai.Face();    // For example
 
                 linear = ai.FollowLeader();
                 angular = ai.Align();
@@ -56,9 +56,10 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Leader";
                 }
-                linear = ai.FollowLeader();
-                ai.Align();
-
+                //linear = ai.FollowLeader();
+                //ai.Align();
+                ai.Leader();
+                angular = ai.Align();
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;

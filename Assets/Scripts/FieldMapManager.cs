@@ -96,7 +96,8 @@ public class FieldMapManager : MonoBehaviour {
         if(CurrentNum == 1)
         {
             EnterMapStateOne();
-        }else if (CurrentNum == 2)
+        }
+        else if (CurrentNum == 2)
         {
             EnterMapStateTwo();
         }
@@ -133,14 +134,23 @@ public class FieldMapManager : MonoBehaviour {
     /// </summary>
     public void EnterMapStateOne() {
         narrator.text = "Marines are following the player and do flocking behaviour";
+        GameObject [] flock = new GameObject[3];
         //Spawn 20 agents who follow the player
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 3; i++)
         {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
             spawner1.transform.position = RandomPosition(-5, 5, -5, 5);
             spawnedNPCs.Add(SpawnItem(spawner1, MarinePrefab, player, SpawnText1, 1));
+            flock[i] = spawnedNPCs[i];
         }
+        player.GetComponent<SteeringBehavior>().flock = flock;
+        //flock[3] = GameObject.FindGameObjectWithTag("Player");
+        //player.GetComponent<NPCController>().phase = 2;
         //ClearStage();
+        for (int j = 0; j < 3; j++)
+        {
+            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+        }
 
     }
 
