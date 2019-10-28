@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
+
         // This simply moves the avatar based on arrow keys.
         // Note that the nose isn't getting correctly aligned. Use your SteeringBehavior to fix that.
         // Change speed on Inspector for "Red"

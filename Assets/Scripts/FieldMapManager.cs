@@ -49,8 +49,11 @@ public class FieldMapManager : MonoBehaviour {
 
     //public int Phase => currentPhase;
 
-    LineRenderer line;                 
-    public GameObject[] Path;
+    LineRenderer line1;
+    LineRenderer line2;
+    public GameObject LR2;
+    public GameObject[] Path1;
+    public GameObject[] Path2;
     public Text narrator;                   // 
     
     // Use this for initialization. Create any initial NPCs here and store them in the 
@@ -133,7 +136,7 @@ public class FieldMapManager : MonoBehaviour {
     /// to do. For each case you may well have more than one thing to do.
     /// </summary>
     public void EnterMapStateOne() {
-        narrator.text = "Marines are following the player and do flocking behaviour";
+        narrator.text = "Birds are following the player and do flocking behaviour";
         GameObject [] flock = new GameObject[3];
         //Spawn 20 agents who follow the player
         for (int i = 0; i < 3; i++)
@@ -157,6 +160,8 @@ public class FieldMapManager : MonoBehaviour {
     public void EnterMapStateTwo()
     {
         narrator.text = "Entering Phase Two";
+        CreatePath1();
+        CreatePath2();
     }
 
     /// <summary>
@@ -184,13 +189,23 @@ public class FieldMapManager : MonoBehaviour {
         return temp;
     }
 
-    private void CreatePath()
+    private void CreatePath1()
     {
-        line = GetComponent<LineRenderer>();
-        line.positionCount = Path.Length;
-        for (int i = 0; i < Path.Length; i++)
+        line1 = GetComponent<LineRenderer>();
+        line1.positionCount = Path1.Length;
+        for (int i = 0; i < Path1.Length; i++)
         {
-            line.SetPosition(i, Path[i].transform.position);
+            line1.SetPosition(i, Path1[i].transform.position);
+        }
+    }
+
+    private void CreatePath2()
+    {
+        line2 = LR2.GetComponent<LineRenderer>();
+        line2.positionCount = Path2.Length;
+        for (int i = 0; i < Path2.Length; i++)
+        {
+            line2.SetPosition(i, Path2[i].transform.position);
         }
     }
 
