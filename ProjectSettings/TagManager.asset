@@ -10,6 +10,7 @@ TagManager:
   - Spawner
   - Marine
   - MapController
+  - Leader
   layers:
   - Default
   - TransparentFX
