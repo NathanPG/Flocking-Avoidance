@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 114403713985068348}
   - component: {fileID: 120447287367831728}
   m_Layer: 0
-  m_Name: Wolf
+  m_Name: BirdKing
   m_TagString: Wolf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,6 +71,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -146,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 114185916214848506}
   target: {fileID: 0}
+  stateController: {fileID: 0}
   maxPrediction: 1
   maxAcceleration: 5
   maxSpeed: 5
@@ -159,8 +161,38 @@ MonoBehaviour:
   wanderOffset: 5
   wanderRadius: 2
   wanderRate: 1
-  Path: []
+  Path1:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Path2:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   current: 0
+  flock: []
+  bird_group1: []
+  bird_group2: []
+  centerWeight: 0.1
+  velocityWeight: 0.65
+  flockWeight: 0.25
+  averageVelocity: {x: 0, y: 0, z: 0}
+  centerPoint: {x: 0, y: 0, z: 0}
+  leaderVelocity: {x: 0, y: 0, z: 0}
+  center1: {x: 0, y: 0, z: 0}
+  center2: {x: 0, y: 0, z: 0}
 --- !u!120 &120447287367831728
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -186,6 +218,7 @@ LineRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -322,6 +355,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

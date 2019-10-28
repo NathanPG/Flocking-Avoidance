@@ -40,7 +40,8 @@ public class SteeringBehavior : MonoBehaviour {
     private float wanderOrientation;
 
     // Holds the path to follow
-    public GameObject[] Path;
+    public GameObject[] Path1;
+    public GameObject[] Path2;
     public int current = 0;
 
     public GameObject[] flock;
@@ -179,19 +180,43 @@ public class SteeringBehavior : MonoBehaviour {
 
     public Vector3 LeaderPath()
     {
-
-        if (CloseEnough(agent.transform.position.x, Path[current].transform.position.x) &&
-            CloseEnough(agent.transform.position.z, Path[current].transform.position.z))
+        
+        if(this.gameObject.tag == "BK1")
         {
-            current++;
+            if (CloseEnough(agent.transform.position.x, Path1[current].transform.position.x) &&
+            CloseEnough(agent.transform.position.z, Path1[current].transform.position.z))
+            {
+                current++;
+            }
         }
+        else if (this.gameObject.tag == "BK2"){
+            if (CloseEnough(agent.transform.position.x, Path2[current].transform.position.x) &&
+            CloseEnough(agent.transform.position.z, Path2[current].transform.position.z))
+            {
+                current++;
+            }
+        }
+        else
+        {
+            Debug.Log("You called this on a object that is not the leader");
+            return Vector3.zero;
+        }
+
         if (current > 5)
         {
             current = 5;
         }
         //Does the standard seek behavior on the new point
         Vector3 direction;
-        direction = Path[current].transform.position;
+        if (this.gameObject.tag == "BK1")
+        {
+            direction = Path1[current].transform.position;
+        }
+        //BK2
+        else 
+        {
+            direction = Path2[current].transform.position;
+        }
 
         Vector3 linear_acc = direction - agent.position;
         linear_acc.Normalize();
