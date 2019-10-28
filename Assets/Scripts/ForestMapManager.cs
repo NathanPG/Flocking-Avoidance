@@ -59,14 +59,9 @@ public class ForestMapManager : MonoBehaviour {
         narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
         stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
         stateController.forestMap = this;
-        trees = new List<GameObject>();
-        SpawnTrees(TreeCount);
-
-        spawnedNPCs = new List<GameObject>();
-        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 4));
-        
-        Invoke("SpawnWolf", 12);
-        Invoke("Meeting1", 30);
+        //trees = new List<GameObject>();
+        //SpawnTrees(TreeCount);
+        CreatePath();
     }
 
     private void Update()

@@ -126,6 +126,14 @@ public class FieldMapManager : MonoBehaviour {
             {
                 SceneManager.LoadScene("Field");
             }
+            if(inputstring[0] == 'C')
+            {
+                //Cone check
+            }
+            if(inputstring[0] == 'P')
+            {
+                //Collision prediction
+            }
         }
     }
 
