@@ -11,6 +11,8 @@ TagManager:
   - Marine
   - MapController
   - Leader
+  - BL1
+  - BL2
   layers:
   - Default
   - TransparentFX

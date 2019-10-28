@@ -13,6 +13,7 @@ public class SteeringBehavior : MonoBehaviour {
     public NPCController agent;
     public NPCController target;
 
+    public StateController stateController;
     // Below are a bunch of variable declarations that will be used for the next few
     // assignments. Only a few of them are needed for the first assignment.
 
@@ -44,6 +45,9 @@ public class SteeringBehavior : MonoBehaviour {
 
     public GameObject[] flock;
 
+    public GameObject[] bird_group1;
+    public GameObject[] bird_group2;
+
     public float centerWeight = .10f;
     public float velocityWeight = .65f;
     public float flockWeight = .25f;
@@ -52,8 +56,12 @@ public class SteeringBehavior : MonoBehaviour {
     public Vector3 centerPoint = Vector3.zero;
     public Vector3 leaderVelocity = Vector3.zero;
 
+    public Vector3 center1 = Vector3.zero;
+    public Vector3 center2 = Vector3.zero;
+
     protected void Start() {
         agent = GetComponent<NPCController>();
+        stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
         wanderOrientation = agent.orientation;
     }
 
@@ -143,6 +151,7 @@ public class SteeringBehavior : MonoBehaviour {
     {
         Vector3 flockVelocity = Vector3.zero;
         Vector3 center = CalcCenter(ref flockVelocity);
+
         //Vector3 others = CheckFlockMembers();
         //Vector3 leader = CheckLeader();
         Debug.Log("Flock velocity " + flockVelocity);
@@ -191,6 +200,17 @@ public class SteeringBehavior : MonoBehaviour {
 
         Vector3 flockVelocity = Vector3.zero;
         Vector3 center = CalcCenter(ref flockVelocity);
+        if(stateController.statenum == 2)
+        {
+            if(this.gameObject.tag == "BK1")
+            {
+                center1 = center;
+            }
+            else if(this.gameObject.tag == "BK2")
+            {
+                center2 = center;
+            }
+        }
         //Vector3 others = CheckFlockMembers();
         //Vector3 leader = CheckLeader();
         Debug.Log("Flock velocity " + flockVelocity);

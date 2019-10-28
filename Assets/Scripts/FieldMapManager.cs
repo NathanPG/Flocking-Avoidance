@@ -21,7 +21,7 @@ using UnityEngine.UI;
 public class FieldMapManager : MonoBehaviour {
     // Set prefabs
     public GameObject PlayerPrefab;     // You, the player
-    public GameObject MarinePrefab;     // Flocking members
+    public GameObject LittleBirdPrefab;     // Flocking members
     public GameObject WolfPrefab;       // Agent getting chased
     public GameObject RedPrefab;        // Red Riding Hood, or just "team red"
     public GameObject BluePrefab;       // "team blue"
@@ -48,7 +48,6 @@ public class FieldMapManager : MonoBehaviour {
     //private int previousPhase = 0;          // The "phases" we were just in
 
     //public int Phase => currentPhase;
-
     LineRenderer line1;
     LineRenderer line2;
     public GameObject LR2;
@@ -67,7 +66,6 @@ public class FieldMapManager : MonoBehaviour {
         }
     }
     
-
     public Vector3 RandomPosition(int xlb, int xub, int zlb, int zub)
     {
         bool found = false;
@@ -92,8 +90,77 @@ public class FieldMapManager : MonoBehaviour {
         //narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
         stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
         CurrentNum = stateController.statenum;
-        //trees = new List<GameObject>();
-        //SpawnTrees(TreeCount);
+
+        GameObject[] flock = new GameObject[3];
+        //Spawn 20 agents who follow the player
+        for (int i = 0; i < 3; i++)
+        {
+            //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
+            spawner1.transform.position = RandomPosition(-5, 5, -5, 5);
+            spawnedNPCs.Add(SpawnItem(spawner1, LittleBirdPrefab, player, SpawnText1, 1));
+            flock[i] = spawnedNPCs[i];
+        }
+        player.GetComponent<SteeringBehavior>().flock = flock;
+        //flock[3] = GameObject.FindGameObjectWithTag("Player");
+        //player.GetComponent<NPCController>().phase = 2;
+        //ClearStage();
+        for (int j = 0; j < 3; j++)
+        {
+            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+        }
+
+
+
+
+
+        flock = new GameObject[5];
+        //SPAWN FIRST LEADER BIRD. spawnedNPCs[20]
+        spawner1.transform.position = new Vector3(-20, 1, 10);
+        GameObject BirdKing1 = SpawnItem(spawner1, LittleBirdPrefab, null, SpawnText1, 3);
+        spawnedNPCs.Add(BirdKing1);
+        //SPAWNING FIRST GROUP OF BIRDS. spawnedNPCs[21,22,23,24,25]
+        for (int i = 0; i < 5; i++)
+        {
+            //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
+            spawner1.transform.position = RandomPosition(-24, -20, 10, 14);
+            //LITTLE BIRDS FOLLOW THE LEADER
+            spawnedNPCs.Add(SpawnItem(spawner1, LittleBirdPrefab, BirdKing1.GetComponent<NPCController>(), SpawnText1, 1));
+            flock[i] = spawnedNPCs[i];
+        }
+        BirdKing1.GetComponent<SteeringBehavior>().flock = flock;
+        for (int j = 21; j < 26; j++)
+        {
+            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+        }
+
+
+
+
+        flock = new GameObject[5];
+        //SPAWN Second LEADER BIRD spawnedNPCs[26]
+        spawner1.transform.position = new Vector3(-20, 1, -10);
+        GameObject BirdKing2 = SpawnItem(spawner1, LittleBirdPrefab, null, SpawnText1, 3);
+        spawnedNPCs.Add(BirdKing2);
+        //SPAWNING Second GROUP OF BIRDS. spawnedNPCs[27,28,29,30,31]
+        for (int i = 0; i < 5; i++)
+        {
+            //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
+            spawner1.transform.position = RandomPosition(-24, -20, -14, -10);
+            //LITTLE BIRDS FOLLOW THE LEADER
+            spawnedNPCs.Add(SpawnItem(spawner1, LittleBirdPrefab, BirdKing2.GetComponent<NPCController>(), SpawnText1, 1));
+            flock[i] = spawnedNPCs[i];
+        }
+        BirdKing2.GetComponent<SteeringBehavior>().flock = flock;
+        for (int j = 27; j < 32; j++)
+        {
+            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+        }
+
+        ClearStage();
+
+
+
+
 
         spawnedNPCs = new List<GameObject>();
         if(CurrentNum == 1)
@@ -104,9 +171,10 @@ public class FieldMapManager : MonoBehaviour {
         {
             EnterMapStateTwo();
         }
-        
-        ClearStage();
     }
+
+
+
 
     private void Update()
     {
@@ -145,22 +213,9 @@ public class FieldMapManager : MonoBehaviour {
     /// </summary>
     public void EnterMapStateOne() {
         narrator.text = "Birds are following the player and do flocking behaviour";
-        GameObject [] flock = new GameObject[3];
-        //Spawn 20 agents who follow the player
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 20; i++)
         {
-            //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
-            spawner1.transform.position = RandomPosition(-5, 5, -5, 5);
-            spawnedNPCs.Add(SpawnItem(spawner1, MarinePrefab, player, SpawnText1, 1));
-            flock[i] = spawnedNPCs[i];
-        }
-        player.GetComponent<SteeringBehavior>().flock = flock;
-        //flock[3] = GameObject.FindGameObjectWithTag("Player");
-        //player.GetComponent<NPCController>().phase = 2;
-        //ClearStage();
-        for (int j = 0; j < 3; j++)
-        {
-            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+            spawnedNPCs[i].SetActive(true);
         }
 
     }
@@ -170,6 +225,10 @@ public class FieldMapManager : MonoBehaviour {
         narrator.text = "Entering Phase Two";
         CreatePath1();
         CreatePath2();
+        for (int i = 20; i < 32; i++)
+        {
+            spawnedNPCs[i].SetActive(true);
+        }
     }
 
     /// <summary>
