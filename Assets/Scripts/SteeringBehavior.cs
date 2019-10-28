@@ -64,6 +64,9 @@ public class SteeringBehavior : MonoBehaviour {
         agent = GetComponent<NPCController>();
         stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
         wanderOrientation = agent.orientation;
+
+        Path1 = GameObject.FindGameObjectsWithTag("path_one");
+        Path2 = GameObject.FindGameObjectsWithTag("path_two");
     }
 
     public Vector3 Seek() {

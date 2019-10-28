@@ -13,6 +13,8 @@ TagManager:
   - Leader
   - BL1
   - BL2
+  - path_one
+  - path_two
   layers:
   - Default
   - TransparentFX
