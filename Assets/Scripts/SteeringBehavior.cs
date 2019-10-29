@@ -109,6 +109,7 @@ public class SteeringBehavior : MonoBehaviour {
 
     public float Align()
     {
+        Debug.Log("Velocity " + agent.velocity);
         if (agent.velocity.magnitude == 0)
         {
             return 0;
@@ -119,10 +120,12 @@ public class SteeringBehavior : MonoBehaviour {
         float x = agent.velocity.x;
         float y = agent.velocity.z;
         float orient = Mathf.Atan2(x, y);
+        Debug.Log("Agent " + agent.rotation);
 
         //Subtracts the agent's current orientation from the place it needs to go
         orient -= agent.orientation;
         orient = TurnToAngle(orient);
+        Debug.Log("Orient " + orient);
 
         //Finds if the acceleration needs to slow down or if the agent is in the right direction
         float absoluteOrient = Mathf.Abs(orient);
@@ -174,29 +177,9 @@ public class SteeringBehavior : MonoBehaviour {
         Vector3 flockVelocity = Vector3.zero;
         Vector3 center = CalcCenter(ref flockVelocity);
 
-        //Vector3 others = CheckFlockMembers();
-        //Vector3 leader = CheckLeader();
-        //Debug.Log("Flock velocity " + flockVelocity);
-        //Debug.Log("Center " + center);
-        //Debug.Log("Separation " + others);
-        //Debug.Log("Velocity " + leaderVelocity);
-
         averageVelocity = flockVelocity;
         centerPoint = center;
         leaderVelocity = gameObject.GetComponent<Rigidbody>().velocity;
-        //Debug.Log("Velocity " + leaderVelocity);
-
-        //flockVelocity *= velocityWeight;
-        //center *= centerWeight;
-        //others *= flockWeight;
-
-        /*Vector3 weightedVelocity = flockVelocity + center + others;
-        weightedVelocity = new Vector3(weightedVelocity.x, 1f, weightedVelocity.z);
-        weightedVelocity.Normalize();
-        weightedVelocity *= maxAcceleration;*/
-
-        //return weightedVelocity;
-        //return Vector3.zero;
     }
 
     public Vector3 LeaderPath()
@@ -254,6 +237,8 @@ public class SteeringBehavior : MonoBehaviour {
         averageVelocity = flockVelocity;
         centerPoint = center;
         leaderVelocity = gameObject.GetComponent<Rigidbody>().velocity;
+        Debug.Log("Acceleration " + linear_acc);
+
         return linear_acc;
     }
 
@@ -302,30 +287,26 @@ public class SteeringBehavior : MonoBehaviour {
         separation *= flockWeight;
 
         Vector3 weightedVelocity = leaderVelocity + moveToCenter + separation;
-        //Debug.Log(weightedVelocity);
         weightedVelocity.Normalize();
         weightedVelocity *= maxAcceleration;
+
+        Debug.Log("Leader " + leaderVelocity);
+        Debug.Log("Center " + moveToCenter);
+        Debug.Log("Separation " + separation);
+
+        if (target.GetComponent<Rigidbody>().velocity == Vector3.zero)
+        {
+            Debug.Log("Leader " + leaderVelocity);
+            return Vector3.zero;
+        }
+
+        if (weightedVelocity.magnitude > maxAcceleration)
+        {
+            weightedVelocity.Normalize();
+            weightedVelocity *= maxAcceleration;
+        }
 
         return weightedVelocity;
-        /*Vector3 flockVelocity = Vector3.zero;
-        Vector3 center = CalcCenter(ref flockVelocity);
-        Vector3 others = CheckFlockMembers();
-        //Vector3 leader = CheckLeader();
-        Debug.Log("Flock velocity " + flockVelocity);
-        Debug.Log("Center " + center);
-        Debug.Log("Separation " + others);
-
-
-        flockVelocity *= velocityWeight;
-        center *= centerWeight;
-        others *= flockWeight;
-
-        Vector3 weightedVelocity = flockVelocity + center + others;
-        weightedVelocity = new Vector3(weightedVelocity.x, 1f, weightedVelocity.z);
-        weightedVelocity.Normalize();
-        weightedVelocity *= maxAcceleration;
-
-        return weightedVelocity;*/
     }
 
     public Vector3 Avoid(RaycastHit hit, RaycastHit leftHit, RaycastHit rightHit, RaycastHit lsHit0, RaycastHit rsHit0, RaycastHit back,
@@ -1199,7 +1180,7 @@ public class SteeringBehavior : MonoBehaviour {
         {
             for (int j = 0; j < hitColliders.Length; j++)
             {
-                //Debug.Log("Collider " + hitColliders[i].transform.name);
+                //Debug.Log("Collider " + hitColliders[j].transform.name);
                 if (hitColliders[j].transform.name == "Ground" || hitColliders[j].transform.name == "Collider Cube") 
                 {
                     continue;
@@ -1212,7 +1193,7 @@ public class SteeringBehavior : MonoBehaviour {
                 }
             }
         }
-        //Debug.Log("average " + average);
+        Debug.Log("average " + average);
         if (average == Vector3.zero)
         {
             return Vector3.zero;
