@@ -8,11 +8,15 @@ TagManager:
   - Hunter
   - Red
   - Spawner
-  - Marine
   - MapController
   - Leader
   - BL1
   - BL2
+  - B1
+  - B2
+  - Path1
+  - Path2
+  - Obstacle
   layers:
   - Default
   - TransparentFX

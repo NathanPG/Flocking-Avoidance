@@ -73,9 +73,9 @@ public class NPCController : MonoBehaviour {
                 break;
             case 4:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Cone check algorithm";
                 }
-
+                ai.ConeCheckFollow();
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;
@@ -154,6 +154,13 @@ public class NPCController : MonoBehaviour {
             line.SetPosition(i, new Vector3(x, 0, z)+position);
             angle += (360f / 51);
         }
+    }
+
+    public void DrawRay(Vector3 endPoint)
+    {
+        line.positionCount = 2;
+        line.SetPosition(0, transform.position);
+        line.SetPosition(1, endPoint);
     }
 
     public void DestroyPoints() {

@@ -11,6 +11,7 @@ public class StateController : MonoBehaviour
     private int currentPhase = 0;           // This stores where in the "phases" the game is.
     private int previousPhase = 0;          // The "phases" we were just in
     public int statenum = 0;
+    public int CorP = 0;
     // Start is called before the first frame update
     void Start()
     {

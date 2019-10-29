@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 
         // This is the physics based movement used in earlier assignments, not needed here.
         Vector3 movement = new Vector3(moveHorizontal, 1f, moveVertical);
-        Debug.Log("movement " + movement);
+        //Debug.Log("movement " + movement);
         rb.AddForce(movement * speed);
     }
 
