@@ -10,13 +10,14 @@ TagManager:
   - Spawner
   - MapController
   - Leader
-  - BL1
-  - BL2
   - B1
   - B2
   - Path1
   - Path2
   - Obstacle
+  - Marine
+  - BK1
+  - BK2
   layers:
   - Default
   - TransparentFX

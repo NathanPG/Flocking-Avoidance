@@ -64,29 +64,38 @@ public class NPCController : MonoBehaviour {
                 // angular = ai.whatever();
                 break;
             case 3:
+                //PART 2 BIRD KINGS
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Leader Follow Path";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
                 break;
             case 4:
+                //PART2 cone check
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Cone check algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Cone check follow leader";
                 }
-                ai.ConeCheckFollow();
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                //ai.ConeCheckFollow();
+
                 break;
             case 5:
+                //PART 2 collision prediction
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fifth algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: CP follow leader";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+ 
                 break;
+            case 6:
+                //PART 3
+                if (label)
+                {
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Raycast follow leader";
+                }
+
+
+                break;
+
         }
         update(linear, angular, Time.deltaTime);
         if (label) {

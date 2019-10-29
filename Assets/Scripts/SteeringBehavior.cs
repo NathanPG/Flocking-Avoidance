@@ -201,7 +201,6 @@ public class SteeringBehavior : MonoBehaviour {
 
     public Vector3 LeaderPath()
     {
-        
         if(this.gameObject.tag == "BK1")
         {
             if (CloseEnough(agent.transform.position.x, Path1[current].transform.position.x) &&
@@ -255,8 +254,6 @@ public class SteeringBehavior : MonoBehaviour {
         averageVelocity = flockVelocity;
         centerPoint = center;
         leaderVelocity = gameObject.GetComponent<Rigidbody>().velocity;
-
-
         return linear_acc;
     }
 
@@ -336,6 +333,8 @@ public class SteeringBehavior : MonoBehaviour {
     {
         //All do the seek to the new position, using the normal off the point it hit the object multiplied
         //by a number for the new target to seek until it has been avoided
+
+        //PART 3 AVOID
         if(stateController.statenum == 3)
         {
             //If only back collision
@@ -703,15 +702,13 @@ public class SteeringBehavior : MonoBehaviour {
 
 
         }
-        
-
-
 
         ResetBools();
         return new Vector3(0f, 0f, 0f);
 
     }
 
+    #region RAYCAST AND AVOID
     //method of collision detection
     public Vector3 RayCast(ref bool l, ref bool r, ref bool mid, ref bool ls0, ref bool rs0, ref bool b,
         ref bool lside, ref bool rside)
@@ -1083,8 +1080,8 @@ public class SteeringBehavior : MonoBehaviour {
         {
             return Vector3.zero;
         }
-
     }
+    #endregion
 
     public void ResetBools()
     {
@@ -1177,7 +1174,7 @@ public class SteeringBehavior : MonoBehaviour {
                 }
                 if (hitColliders[j].transform.position != agent.transform.position && hitColliders[j].transform == flock[i].transform)
                 {
-                    Debug.Log("Collider " + hitColliders[i].transform.name);
+                    //Debug.Log("Collider " + hitColliders[i].transform.name);
                     average += hitColliders[j].transform.position;
                     count++;
                 }

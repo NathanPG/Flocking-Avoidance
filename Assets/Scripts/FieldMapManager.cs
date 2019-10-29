@@ -41,10 +41,7 @@ public class FieldMapManager : MonoBehaviour {
     public Text SpawnText3;
 
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
-    //private int currentPhase = 0;           // This stores where in the "phases" the game is.
-    //private int previousPhase = 0;          // The "phases" we were just in
 
-    //public int Phase => currentPhase;
     LineRenderer line1;
     LineRenderer line2;
     public GameObject LR2;
@@ -52,8 +49,6 @@ public class FieldMapManager : MonoBehaviour {
     public GameObject[] Path2;
     public Text narrator;
     
-    // Use this for initialization. Create any initial NPCs here and store them in the 
-    // spawnedNPCs list. You can always add/remove NPCs later on.
     public void ClearStage()
     {
         foreach (GameObject NPC in spawnedNPCs)
@@ -86,19 +81,15 @@ public class FieldMapManager : MonoBehaviour {
     void Start() {
         //narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
         stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
-       
+        spawnedNPCs = new List<GameObject>();
+
         GameObject[] flock = new GameObject[20];
         //Spawn 20 agents who follow the player
         for (int i = 0; i < 20; i++)
         {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
             spawner1.transform.position = RandomPosition(-10, 10, -10, 10);
-            if (player)
-            {
-                Debug.Log("Player is there");
-            }
-            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, player.GetComponent<NPCController>(), SpawnText1, 1);
-            spawnedNPCs.Add(bird);
+            spawnedNPCs.Add(SpawnItem(spawner1, LittleBirdPrefab, player.GetComponent<NPCController>(), SpawnText1, 1));
             flock[i] = spawnedNPCs[i];
         }
         player.GetComponent<SteeringBehavior>().flock = flock;
@@ -160,13 +151,9 @@ public class FieldMapManager : MonoBehaviour {
             spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
         }
 
-        //ClearStage();
+        ClearStage();
 
 
-
-
-
-        spawnedNPCs = new List<GameObject>();
         if(stateController.statenum == 1)
         {
             EnterMapStateOne();
@@ -188,10 +175,19 @@ public class FieldMapManager : MonoBehaviour {
         {
             if (inputstring[0] == 'S' | inputstring[0] == 's')
             {
-                foreach (GameObject NPC in spawnedNPCs)
+                if(stateController.statenum == 1)
                 {
-                    //NPC.GetComponent<NPCController>().label.enabled = true;
-                    NPC.SetActive(true);
+                    player.SetActive(true);
+                    for (int i = 0; i < 20; i++)
+                    {
+                        spawnedNPCs[i].SetActive(true);
+                    }
+                }
+                else if(stateController.statenum == 2) {
+                    for (int i = 20; i < 32; i++)
+                    {
+                        spawnedNPCs[i].SetActive(true);
+                    }
                 }
             }
             if (inputstring[0] == 'R' | inputstring[0] == 'r')
@@ -218,12 +214,9 @@ public class FieldMapManager : MonoBehaviour {
     /// to do. For each case you may well have more than one thing to do.
     /// </summary>
     public void EnterMapStateOne() {
+        ClearStage();
         narrator.text = "Birds are following the player and do flocking behaviour";
-        player.SetActive(true);
-        for (int i = 0; i < 20; i++)
-        {
-            spawnedNPCs[i].SetActive(true);
-        }
+        
 
     }
 
@@ -233,10 +226,7 @@ public class FieldMapManager : MonoBehaviour {
         narrator.text = "Entering Phase Two";
         CreatePath1();
         CreatePath2();
-        for (int i = 20; i < 32; i++)
-        {
-            spawnedNPCs[i].SetActive(true);
-        }
+        
     }
 
     /// <summary>
