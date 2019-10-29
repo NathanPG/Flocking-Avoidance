@@ -32,6 +32,7 @@ public class NPCController : MonoBehaviour {
         line = GetComponent<LineRenderer>();
         position = rb.position;
         orientation = transform.eulerAngles.y;
+        //rotation = 0f;
     }
 
     /// <summary>
@@ -59,7 +60,11 @@ public class NPCController : MonoBehaviour {
                 //linear = ai.FollowLeader();
                 //ai.Align();
                 ai.Leader();
+                velocity = rb.velocity;
+                orientation = transform.eulerAngles.y;
+                //rotation = orientation;
                 angular = ai.Align();
+                Debug.Log("Angular " + orientation);
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;
@@ -68,6 +73,8 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Leader Follow Path";
                 }
+                linear = ai.LeaderPath();
+                angular = ai.Align();
 
                 break;
             case 4:

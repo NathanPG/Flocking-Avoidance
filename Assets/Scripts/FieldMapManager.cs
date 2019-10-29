@@ -115,6 +115,7 @@ public class FieldMapManager : MonoBehaviour {
             spawner1.transform.position = RandomPosition(-24, -20, 10, 14);
             //LITTLE BIRDS FOLLOW THE LEADER
             GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing1.GetComponent<NPCController>(), SpawnText1, 1);
+            //bird.transform.position = RandomPosition()
             bird.tag = "B1";
             spawnedNPCs.Add(bird);
             flock[i] = spawnedNPCs[i];
