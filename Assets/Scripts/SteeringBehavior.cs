@@ -1110,12 +1110,44 @@ public class SteeringBehavior : MonoBehaviour {
             return FollowLeader();
         }
     }
-    /*
+    
     public Vector3 PredictionFollow()
     {
-        
-        if ()
+        float closest_time = 999f;
+        float predict_time = 999f;
+        GameObject[] OtherGroup;
+        if (this.gameObject.tag == "B1")
         {
+            OtherGroup = GameObject.FindGameObjectsWithTag("B2");
+        }
+        else
+        {
+            OtherGroup = GameObject.FindGameObjectsWithTag("B1");
+        }
+        foreach (GameObject bird in OtherGroup)
+        {
+            NPCController agent = this.gameObject.GetComponent<NPCController>();
+            NPCController target = bird.GetComponent<NPCController>();
+
+            predict_time = Vector3.Dot(target.position - agent.position, target.velocity - agent.velocity)
+                / Mathf.Pow((target.velocity - agent.velocity).magnitude, 2);
+            predict_time *= -1;
+            if (predict_time < closest_time)
+            {
+                closest_time = predict_time;
+            }
+        }
+        Debug.Log("Closest Collision Time: "+ closest_time);
+        if (closest_time < 1f && closest_time > 0)
+        {
+            //AVOID
+            Vector3 newTarget = agent.position + closest_time*agent.velocity + new Vector3(5f, 0, 5f);
+            
+            newTarget.Normalize();
+            newTarget *= maxAcceleration;
+            ResetBools();
+            agent.DrawCircle(newTarget, 0.5f);
+            return newTarget;
 
         }
         else
@@ -1123,7 +1155,7 @@ public class SteeringBehavior : MonoBehaviour {
             return FollowLeader();
         }
     }
-    */
+    
 
     public Vector3 CalcCenter(ref Vector3 velocity)
     {

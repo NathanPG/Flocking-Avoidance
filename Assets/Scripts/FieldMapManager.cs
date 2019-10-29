@@ -114,7 +114,7 @@ public class FieldMapManager : MonoBehaviour {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
             spawner1.transform.position = RandomPosition(-24, -20, 10, 14);
             //LITTLE BIRDS FOLLOW THE LEADER
-            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing1.GetComponent<NPCController>(), SpawnText1, 1);
+            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing1.GetComponent<NPCController>(), SpawnText1, 5);
             bird.tag = "B1";
             spawnedNPCs.Add(bird);
             flock[i] = spawnedNPCs[i];
@@ -140,7 +140,7 @@ public class FieldMapManager : MonoBehaviour {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
             spawner1.transform.position = RandomPosition(-24, -20, -14, -10);
             //LITTLE BIRDS FOLLOW THE LEADER
-            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing2.GetComponent<NPCController>(), SpawnText1, 1);
+            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing2.GetComponent<NPCController>(), SpawnText1, 5);
             bird.tag = "B2";
             spawnedNPCs.Add(bird);
             flock[i] = spawnedNPCs[i];
@@ -194,15 +194,31 @@ public class FieldMapManager : MonoBehaviour {
             {
                 SceneManager.LoadScene("Field");
             }
-            if(inputstring[0] == 'C')
+            if((inputstring[0] == 'C' | inputstring[0] == 'c') && stateController.statenum == 2)
             {
                 //Cone check
                 stateController.CorP = 0;
+                for (int i = 21; i < 26; i++)
+                {
+                    spawnedNPCs[i].GetComponent<NPCController>().phase = 4;
+                }
+                for (int i = 27; i < 32; i++)
+                {
+                    spawnedNPCs[i].GetComponent<NPCController>().phase = 4;
+                }
             }
-            if(inputstring[0] == 'P')
+            if((inputstring[0] == 'P' | inputstring[0] == 'p')&& stateController.statenum == 2)
             {
                 //Collision prediction
                 stateController.CorP = 1;
+                for (int i = 21; i < 26; i++)
+                {
+                    spawnedNPCs[i].GetComponent<NPCController>().phase = 5;
+                }
+                for (int i = 27; i < 32; i++)
+                {
+                    spawnedNPCs[i].GetComponent<NPCController>().phase = 5;
+                }
             }
         }
     }
