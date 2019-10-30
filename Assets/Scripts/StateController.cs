@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class StateController : MonoBehaviour
 {
-    public ForestMapManager forestMap;
-    public FieldMapManager fieldMap;
     private int currentPhase = 0;           // This stores where in the "phases" the game is.
     private int previousPhase = 0;          // The "phases" we were just in
     public int statenum = 0;

@@ -15,9 +15,11 @@ TagManager:
   - Path1
   - Path2
   - Obstacle
-  - Marine
   - BK1
   - BK2
+  - Path3
+  - Marine
+  - BK3
   layers:
   - Default
   - TransparentFX

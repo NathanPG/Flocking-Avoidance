@@ -82,7 +82,8 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Cone check follow leader";
                 }
-                //ai.ConeCheckFollow();
+                linear = ai.ConeCheckFollow();
+                angular = ai.Align();
 
                 break;
             case 5:
@@ -90,8 +91,9 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: CP follow leader";
                 }
+                linear = ai.PredictionFollow();
+                angular = ai.Align();
 
- 
                 break;
             case 6:
                 //PART 3
@@ -99,8 +101,8 @@ public class NPCController : MonoBehaviour {
                 {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Raycast follow leader";
                 }
-
-
+                linear = ai.RaycastFollow();
+                angular = ai.Align();
                 break;
 
         }

@@ -19,8 +19,8 @@ using UnityEngine.UI;
 public class ForestMapManager : MonoBehaviour {
     // Set prefabs
     public GameObject PlayerPrefab;     // You, the player
-    public GameObject HunterPrefab;     // Agent doing chasing
-    public GameObject WolfPrefab;       // Agent getting chased
+    public GameObject LittleBirdPrefab;     // Agent doing chasing
+    public GameObject BirdKingPrefab;       // Agent getting chased
     public GameObject RedPrefab;        // Red Riding Hood, or just "team red"
     public GameObject BluePrefab;       // "team blue"
     public GameObject TreePrefab;       // New for Assignment #2
@@ -41,7 +41,7 @@ public class ForestMapManager : MonoBehaviour {
     public int TreeCount;
  
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
-    private List<GameObject> trees;
+    //private List<GameObject> trees;
 
     //private int currentPhase = 0;           // This stores where in the "phases" the game is.
     //private int previousPhase = 0;          // The "phases" we were just in
@@ -55,25 +55,72 @@ public class ForestMapManager : MonoBehaviour {
     // Use this for initialization. Create any initial NPCs here and store them in the 
     // spawnedNPCs list. You can always add/remove NPCs later on.
 
-    void Start() {
-        narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
-        stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
-        stateController.forestMap = this;
-        //trees = new List<GameObject>();
-        //SpawnTrees(TreeCount);
-        CreatePath();
+    public Vector3 RandomPosition(int xlb, int xub, int zlb, int zub)
+    {
+        bool found = false;
+        Vector3 newPos = new Vector3(0f, 1f, 0f);
+
+        while (found == false)
+        {
+            float x = UnityEngine.Random.Range(xlb, xub);
+            float z = UnityEngine.Random.Range(zlb, zub);
+            newPos = new Vector3(x, 1f, z);
+            Collider[] hitColliders = Physics.OverlapSphere(newPos, .5f);
+            if (hitColliders.Length == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+        return newPos;
     }
 
+    void Start() {
+        
+        narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
+        stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
+        spawnedNPCs = new List<GameObject>();
+        GameObject[] flock = new GameObject[5];
+        //SPAWN FIRST LEADER BIRD. spawnedNPCs[0]
+        spawner1.transform.position = new Vector3(5, 1, 13);
+        GameObject BirdKing = SpawnItem(spawner1, BirdKingPrefab, null, SpawnText1, 3);
+        BirdKing.tag = "BK3";
+        spawnedNPCs.Add(BirdKing);
+        //SPAWNING FIRST GROUP OF BIRDS. spawnedNPCs[1,2,3,4,5]
+        for (int i = 0; i < 5; i++)
+        {
+            //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
+            spawner1.transform.position = RandomPosition(5, 6, 10, 11);
+            //LITTLE BIRDS FOLLOW THE LEADER
+            GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing.GetComponent<NPCController>(), SpawnText1, 6);
+            spawnedNPCs.Add(bird);
+            flock[i] = spawnedNPCs[i];
+        }
+        for (int j = 0; j < 6; j++)
+        {
+            spawnedNPCs[j].GetComponent<SteeringBehavior>().flock = flock;
+        }
+        ClearStage();
+        EnterMapStateThree();
+    }
+    public void ClearStage()
+    {
+        foreach (GameObject NPC in spawnedNPCs)
+        {
+            //NPC.GetComponent<NPCController>().label.enabled = false;
+            NPC.SetActive(false);
+        }
+    }
     private void Update()
     {
         string inputstring = Input.inputString;
         if (inputstring.Length > 0)
         {
-            if (inputstring[0] == 'R')
+            if (inputstring[0] == 'R' || inputstring[0] == 'r')
             {
                 stateController.LoadThree();
             }
-            if (inputstring[0] == 'S')
+            if (inputstring[0] == 'S' || inputstring[0] == 's')
             {
                 foreach (GameObject NPC in spawnedNPCs)
                 {
@@ -88,6 +135,7 @@ public class ForestMapManager : MonoBehaviour {
     public void EnterMapStateThree()
     {
         narrator.text = "Entering Phase Three";
+        CreatePath();
     }
 
     /// <summary>
@@ -115,6 +163,7 @@ public class ForestMapManager : MonoBehaviour {
         return temp;
     }
 
+    /*
     /// <summary>
     /// SpawnTrees will randomly place tree prefabs all over the map. The diameters
     /// of the trees are also varied randomly.
@@ -146,6 +195,7 @@ public class ForestMapManager : MonoBehaviour {
           
         }
     }
+    */
 
     /*
     private void DestroyTrees()
@@ -160,12 +210,6 @@ public class ForestMapManager : MonoBehaviour {
         // create more complex movement behaviors.
     }
     */
-
-    private void SetArrive(GameObject character) {
-
-        character.GetComponent<NPCController>().phase = 3;
-        character.GetComponent<NPCController>().DrawConcentricCircle(character.GetComponent<SteeringBehavior>().slowRadiusL);
-    }
 
     private void CreatePath()
     {
