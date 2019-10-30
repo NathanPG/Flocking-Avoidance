@@ -572,11 +572,11 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if(this.gameObject.tag == "B1" && hit.transform.tag == "B2")
                 {
-                    //agent.DrawRay(hit.transform.position);
+                    agent.DrawCircle(hit.point, 1f);
                     mid = true;
                 }else if(this.gameObject.tag == "B2" && hit.transform.tag == "B1")
                 {
-                    //agent.DrawRay(hit.transform.position);
+                    agent.DrawCircle(hit.point, 1f);
                     mid = true;
                 }
             }
@@ -585,7 +585,7 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if(hit.transform.tag != "Obstacle")
                 {
-                    //agent.DrawRay(hit.transform.position);
+                    agent.DrawCircle(hit.point, 1f);
                     mid = true;
                 }
             }
@@ -600,12 +600,12 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (this.gameObject.tag == "B1" && rightHit.transform.tag == "B2")
                 {
-                    //agent.DrawRay(rightHit.transform.position);
+                    agent.DrawCircle(rightHit.point, 1f);
                     r = true;
                 }
                 else if (this.gameObject.tag == "B2" && rightHit.transform.tag == "B1")
                 {
-                    //agent.DrawRay(rightHit.transform.position);
+                    agent.DrawCircle(rightHit.point, 1f);
                     r = true;
                 }
             }
@@ -614,7 +614,7 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (rightHit.transform.tag != "Obstacle")
                 {
-                    //agent.DrawRay(rightHit.transform.position);
+                    agent.DrawCircle(rightHit.point, 1f);
                     r = true;
                 }
             }
@@ -631,12 +631,12 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (this.gameObject.tag == "B1" && leftHit.transform.tag == "B2")
                 {
-                    //agent.DrawRay(leftHit.transform.position);
+                    agent.DrawCircle(leftHit.point, 1f);
                     l = true;
                 }
                 else if (this.gameObject.tag == "B2" && leftHit.transform.tag == "B1")
                 {
-                    //agent.DrawRay(leftHit.transform.position);
+                    agent.DrawCircle(leftHit.point, 1f);
                     l = true;
                 }
             }
@@ -645,7 +645,7 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (leftHit.transform.tag == "Obstacle")
                 {
-                    //agent.DrawRay(leftHit.transform.position);
+                    agent.DrawCircle(leftHit.point, 1f);
                     l = true;
                 }
             }
@@ -661,12 +661,12 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (this.gameObject.tag == "B1" && lsHit0.transform.tag == "B2")
                 {
-                    //agent.DrawRay(lsHit0.transform.position);
+                    agent.DrawCircle(lsHit0.point, 1f);
                     ls0 = true;
                 }
                 else if (this.gameObject.tag == "B2" && lsHit0.transform.tag == "B1")
                 {
-                    //agent.DrawRay(lsHit0.transform.position);
+                    agent.DrawCircle(lsHit0.point, 1f);
                     ls0 = true;
                 }
             }
@@ -690,12 +690,12 @@ public class SteeringBehavior : MonoBehaviour {
             {
                 if (this.gameObject.tag == "B1" && rsHit0.transform.tag == "B2")
                 {
-                    //agent.DrawRay(rsHit0.transform.position);
+                    agent.DrawCircle(rsHit0.point, 1f);
                     rs0 = true;
                 }
                 else if (this.gameObject.tag == "B2" && rsHit0.transform.tag == "B1")
                 {
-                    //agent.DrawRay(rsHit0.transform.position);
+                    agent.DrawCircle(rsHit0.point, 1f);
                     rs0 = true;
                 }
             }
@@ -764,7 +764,7 @@ public class SteeringBehavior : MonoBehaviour {
             //Debug.DrawRay(cube, leftsidedirect * 1f, Color.blue);
             if (lsideHit.transform.tag == "Obstacle" && stateController.statenum == 3)
             {
-                //agent.DrawRay(lsideHit.transform.position);
+                agent.DrawCircle(lsideHit.point, 1f);
                 lside = true;
             }
         }
@@ -773,7 +773,7 @@ public class SteeringBehavior : MonoBehaviour {
             //Debug.DrawRay(cube, rightsidedirect * 1f, Color.blue);
             if (rsideHit.transform.tag == "Obstacle" && stateController.statenum == 3)
             {
-                //agent.DrawRay(rsideHit.transform.position);
+                agent.DrawCircle(lsideHit.point, 1f);
                 rside = true;
             }
         }
@@ -860,11 +860,11 @@ public class SteeringBehavior : MonoBehaviour {
         {
             //AVOID
             Vector3 newTarget = agent.position + closest_time * agent.velocity + new Vector3(5f, 0, 5f);
-            
+            agent.DrawCircle(newTarget, 0.5f);
             newTarget.Normalize();
             newTarget *= maxAcceleration;
             ResetBools();
-            agent.DrawCircle(newTarget, 0.5f);
+            
             return newTarget;
 
         }
