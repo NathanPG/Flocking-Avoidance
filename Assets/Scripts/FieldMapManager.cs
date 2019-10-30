@@ -88,7 +88,7 @@ public class FieldMapManager : MonoBehaviour {
         for (int i = 0; i < 20; i++)
         {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
-            spawner1.transform.position = RandomPosition(-10, 10, -10, 10);
+            spawner1.transform.position = RandomPosition(-8, 8, -8, 8);
             spawnedNPCs.Add(SpawnItem(spawner1, LittleBirdPrefab, player.GetComponent<NPCController>(), SpawnText1, 1));
             flock[i] = spawnedNPCs[i];
         }
@@ -112,7 +112,7 @@ public class FieldMapManager : MonoBehaviour {
         for (int i = 0; i < 5; i++)
         {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
-            spawner1.transform.position = RandomPosition(-24, -20, 10, 14);
+            spawner1.transform.position = RandomPosition(-18, -17, 10, 12);
             //LITTLE BIRDS FOLLOW THE LEADER
             GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing1.GetComponent<NPCController>(), SpawnText1, 4);
             bird.tag = "B1";
@@ -138,7 +138,7 @@ public class FieldMapManager : MonoBehaviour {
         for (int i = 0; i < 5; i++)
         {
             //RandomPosition(-23, 23, -19, 19) will spawn across the whole map
-            spawner1.transform.position = RandomPosition(-24, -20, -14, -10);
+            spawner1.transform.position = RandomPosition(-18, -17, -12, -10);
             //LITTLE BIRDS FOLLOW THE LEADER
             GameObject bird = SpawnItem(spawner1, LittleBirdPrefab, BirdKing2.GetComponent<NPCController>(), SpawnText1, 5);
             bird.tag = "B2";
