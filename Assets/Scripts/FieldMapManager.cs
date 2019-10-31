@@ -175,39 +175,24 @@ public class FieldMapManager : MonoBehaviour {
         {
             if (inputstring[0] == 'S' | inputstring[0] == 's')
             {
-                if (!stateController.isStart)
+                if(stateController.statenum == 1)
                 {
-                    stateController.isStart = true;
-                    if (stateController.statenum == 1)
+                    player.SetActive(true);
+                    for (int i = 0; i < 20; i++)
                     {
-                        player.SetActive(true);
-                        for (int i = 0; i < 20; i++)
-                        {
-                            spawnedNPCs[i].SetActive(true);
-                        }
-                    }
-                    else if (stateController.statenum == 2)
-                    {
-                        for (int i = 20; i < 32; i++)
-                        {
-                            spawnedNPCs[i].SetActive(true);
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    stateController.isStart = false;
-                    if(stateController.statenum == 1)
-                    {
-                        stateController.LoadOne();
-                    }
-                    else
-                    {
-                        stateController.LoadTwo();
+                        spawnedNPCs[i].SetActive(true);
                     }
                 }
-                
+                else if(stateController.statenum == 2) {
+                    for (int i = 20; i < 32; i++)
+                    {
+                        spawnedNPCs[i].SetActive(true);
+                    }
+                }
+            }
+            if (inputstring[0] == 'R' | inputstring[0] == 'r')
+            {
+                stateController.LoadTwo();
             }
             if((inputstring[0] == 'C' | inputstring[0] == 'c') && stateController.statenum == 2)
             {

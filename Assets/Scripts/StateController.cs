@@ -10,7 +10,6 @@ public class StateController : MonoBehaviour
     private int previousPhase = 0;          // The "phases" we were just in
     public int statenum = 0;
     public int CorP = 0;
-    public bool isStart = false;
     // Start is called before the first frame update
     void Start()
     {

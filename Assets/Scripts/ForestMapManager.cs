@@ -116,23 +116,17 @@ public class ForestMapManager : MonoBehaviour {
         string inputstring = Input.inputString;
         if (inputstring.Length > 0)
         {
+            if (inputstring[0] == 'R' || inputstring[0] == 'r')
+            {
+                stateController.LoadThree();
+            }
             if (inputstring[0] == 'S' || inputstring[0] == 's')
             {
-                if (!stateController.isStart)
+                foreach (GameObject NPC in spawnedNPCs)
                 {
-                    stateController.isStart = true;
-                    foreach (GameObject NPC in spawnedNPCs)
-                    {
-                        //NPC.GetComponent<NPCController>().label.enabled = true;
-                        NPC.SetActive(true);
-                    }
+                    //NPC.GetComponent<NPCController>().label.enabled = true;
+                    NPC.SetActive(true);
                 }
-                else
-                {
-                    stateController.isStart = false;
-                    stateController.LoadThree();
-                }
-                
             }
         }
             
