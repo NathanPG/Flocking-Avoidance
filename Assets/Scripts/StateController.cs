@@ -45,35 +45,59 @@ public class StateController : MonoBehaviour
                 break;
             //Clicking 1 presents Part 1
             case 1:
-                LoadOne();
-                currentPhase = 0;
+                if (statenum != 1)
+                {
+                    LoadOne();
+                    currentPhase = 0;
+                }
+                
                 break;
             //Clicking 2 presents Part 2
             case 2:
-                LoadTwo();
-                currentPhase = 0;
+                if (statenum != 2)
+                {
+                    LoadTwo();
+                    currentPhase = 0;
+                }
+                
                 break;
             //Clicking 3 presents Part 3
             case 3:
-                LoadThree();
-                currentPhase = 0;
+                if (statenum != 3)
+                {
+                    LoadThree();
+                    currentPhase = 0;
+                }
+                
                 break;
             
         }
     }
     public void LoadOne()
     {
-        SceneManager.LoadScene("Field");
-        statenum = 1;
+        if (statenum != 1)
+        {
+            SceneManager.LoadScene("Field");
+            statenum = 1;
+        }
+        
     }
     public void LoadTwo()
     {
-        SceneManager.LoadScene("Field");
-        statenum = 2;
+        if (statenum != 2)
+        {
+            SceneManager.LoadScene("Field");
+            statenum = 2;
+        }
+        
     }
     public void LoadThree()
     {
-        SceneManager.LoadScene("Forest");
-        statenum = 3;
+        if (statenum != 3)
+        {
+            SceneManager.LoadScene("Forest");
+            statenum = 3;
+        }
+        
     }
 }
