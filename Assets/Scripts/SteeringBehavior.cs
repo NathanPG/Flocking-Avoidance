@@ -255,36 +255,35 @@ public class SteeringBehavior : MonoBehaviour {
         {
             direction = Path3[current].transform.position;
         }
-        Debug.Log("Path point " + direction);
+        //Debug.Log("Path point " + direction);
 
-        /*float dist = (direction - agent.position).magnitude;
-        //get current agent speed
+        Vector3 direct = direction - agent.position;
+        float dist = direct.magnitude;
         float speed = agent.velocity.magnitude;
-
-        float prediction = 0f;
-        //if the speed is not enough to reach the target with max prediction time
-        if (speed <= dist / maxPrediction)
+        if (dist < targetRadiusL)
         {
-            prediction = maxPrediction;
+            return new Vector3(0, 0, 0);
         }
-        //if current speed is enough to reach the target with max prediction time
+        else if (dist > slowRadiusL)
+        {
+            speed = maxSpeed;
+        }
         else
         {
-            prediction = dist / speed;
+            speed = maxSpeed * dist / slowRadiusL;
         }
-        //Draw prediction circle
-        agent.DrawCircle(direction * prediction, 1f);
-        //Get direction vector with prediction
-        Vector3 linear_acc = (direction * prediction) - agent.position;
-        linear_acc.Normalize();
-        //Get linear acceleration and return
-        linear_acc *= maxAcceleration;
-        return linear_acc;*/
-
-        Vector3 linear_acc = direction - agent.position;
-        linear_acc.Normalize();
-        //Get linear acceleration and return it
-        linear_acc *= maxAcceleration;
+        //Get target velocity
+        Vector3 targetVelocity = direct;
+        targetVelocity.Normalize();
+        targetVelocity *= speed;
+        //Get the linear acceleration with predict time
+        Vector3 linear_acc = (targetVelocity - agent.velocity) / timeToTarget;
+        //Restric the max linear acceleration
+        if (linear_acc.magnitude > maxAcceleration)
+        {
+            linear_acc.Normalize();
+            linear_acc *= maxAcceleration;
+        }
 
         Vector3 flockVelocity = Vector3.zero;
         Vector3 center = CalcCenter(ref flockVelocity);        //Vector3 others = CheckFlockMembers();
