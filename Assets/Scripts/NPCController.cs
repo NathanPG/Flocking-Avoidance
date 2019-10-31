@@ -62,8 +62,11 @@ public class NPCController : MonoBehaviour {
                 ai.Leader();
                 velocity = rb.velocity;
                 orientation = transform.eulerAngles.y;
+                //rotation = transform.rotation;
                 //rotation = orientation;
+                //rotation = 
                 angular = ai.Align();
+                //rotation = orientation;
                 //Debug.Log("Angular " + orientation);
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
