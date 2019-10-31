@@ -196,6 +196,7 @@ public class FieldMapManager : MonoBehaviour {
             }
             if((inputstring[0] == 'C' | inputstring[0] == 'c') && stateController.statenum == 2)
             {
+                narrator.text = "Two groups of brids are following the paths\n Cone Check";
                 //Cone check
                 stateController.CorP = 0;
                 for (int i = 21; i < 26; i++)
@@ -210,6 +211,7 @@ public class FieldMapManager : MonoBehaviour {
             if((inputstring[0] == 'P' | inputstring[0] == 'p')&& stateController.statenum == 2)
             {
                 //Collision prediction
+                narrator.text = "Two groups of brids are following the paths\n Using Collision prediction";
                 stateController.CorP = 1;
                 for (int i = 21; i < 26; i++)
                 {
@@ -232,14 +234,13 @@ public class FieldMapManager : MonoBehaviour {
     public void EnterMapStateOne() {
         ClearStage();
         narrator.text = "Birds are following the player and do flocking behaviour";
-        
 
     }
 
     public void EnterMapStateTwo()
     {
         ClearStage();
-        narrator.text = "Entering Phase Two";
+        narrator.text = "Two groups of brids are following the paths/n Cone Check";
         CreatePath1();
         CreatePath2();
         

@@ -134,7 +134,7 @@ public class ForestMapManager : MonoBehaviour {
 
     public void EnterMapStateThree()
     {
-        narrator.text = "Entering Phase Three";
+        narrator.text = "Birds are trying their best to follow the leader";
         CreatePath();
     }
 
