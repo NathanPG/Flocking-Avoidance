@@ -58,6 +58,8 @@ public class SteeringBehavior : MonoBehaviour {
     public Vector3 centerPoint = Vector3.zero;
     public Vector3 leaderVelocity = Vector3.zero;
 
+    public float distFloat = 100f;
+
 
     bool avoidIt;
     bool l;
@@ -375,7 +377,7 @@ public class SteeringBehavior : MonoBehaviour {
             //For left and right or left, middle and right collisions
             if ((l && r && mid) || (l && r) || (ls0 && mid) || (rs0 && mid) || (rs0 && ls0))
             {
-                Vector3 newTarget = hit.point + new Vector3(5f, 0, 5f);
+                Vector3 newTarget = hit.point + new Vector3(distFloat, 0, distFloat);
                 //agent.DrawCircle(hit.point, .5f);
                 newTarget.Normalize();
                 newTarget *= maxAcceleration;
@@ -406,7 +408,7 @@ public class SteeringBehavior : MonoBehaviour {
                     if (l)
                     {
                         lastLeft = true;
-                        Vector3 newTarget = hit.point + new Vector3(5f, 0, 5f);
+                        Vector3 newTarget = hit.point + new Vector3(distFloat, 0, distFloat);
                         newTarget.Normalize();
                         newTarget *= maxAcceleration;
                         ResetBools();
@@ -416,7 +418,7 @@ public class SteeringBehavior : MonoBehaviour {
                     else
                     {
                         lastLeft = false;
-                        Vector3 newTarget = hit.point - new Vector3(5f, 0, 5f);
+                        Vector3 newTarget = hit.point - new Vector3(distFloat, 0, distFloat);
                         newTarget.Normalize();
                         newTarget *= maxAcceleration;
                         ResetBools();
@@ -426,7 +428,7 @@ public class SteeringBehavior : MonoBehaviour {
                 else
                 {
                     //Otherwise does the standard seek 
-                    Vector3 linear_acc = hit.point + hit.normal * 5f;
+                    Vector3 linear_acc = hit.point + hit.normal * distFloat;
                     linear_acc.Normalize();
                     linear_acc *= maxAcceleration;
                     if (l)
@@ -448,7 +450,7 @@ public class SteeringBehavior : MonoBehaviour {
             {
 
                 lastLeft = true;
-                Vector3 target = leftHit.point + leftHit.normal * 5f;
+                Vector3 target = leftHit.point + leftHit.normal * distFloat;
                 Vector3 linear_acc = target - agent.transform.position;
                 linear_acc.Normalize();
                 linear_acc *= maxAcceleration;
@@ -460,7 +462,7 @@ public class SteeringBehavior : MonoBehaviour {
             {
 
                 lastLeft = false;
-                Vector3 target = rightHit.point + rightHit.normal * 5f;
+                Vector3 target = rightHit.point + rightHit.normal * distFloat;
                 Vector3 linear_acc = target - agent.transform.position;
                 linear_acc.Normalize();
                 linear_acc *= maxAcceleration;
@@ -478,7 +480,7 @@ public class SteeringBehavior : MonoBehaviour {
                     float random = Random.Range(0, 1);
                     if (random > .5)
                     {
-                        Vector3 newTarget = hit.point + new Vector3(5f, 0, 5f);
+                        Vector3 newTarget = hit.point + new Vector3(distFloat, 0, distFloat);
                         newTarget.Normalize();
                         newTarget *= maxAcceleration;
                         ResetBools();
@@ -486,7 +488,7 @@ public class SteeringBehavior : MonoBehaviour {
                     }
                     else
                     {
-                        Vector3 newTarget = hit.point - new Vector3(5f, 0, 5f);
+                        Vector3 newTarget = hit.point - new Vector3(distFloat, 0, distFloat);
                         newTarget.Normalize();
                         newTarget *= maxAcceleration;
                         ResetBools();
@@ -495,7 +497,7 @@ public class SteeringBehavior : MonoBehaviour {
                 }
                 else
                 {
-                    Vector3 linear_acc = hit.point + hit.normal * 5f;
+                    Vector3 linear_acc = hit.point + hit.normal * distFloat;
                     linear_acc.Normalize();
                     linear_acc *= maxAcceleration;
                     ResetBools();
@@ -525,7 +527,7 @@ public class SteeringBehavior : MonoBehaviour {
                         point_Avoid = hitpoint;
                     }
                 }
-                Vector3 newTarget = point_Avoid + new Vector3(5f, 0, 5f);
+                Vector3 newTarget = point_Avoid + new Vector3(distFloat, 0, distFloat);
                 newTarget.Normalize();
                 newTarget *= maxAcceleration;
                 ResetBools();
@@ -590,9 +592,9 @@ public class SteeringBehavior : MonoBehaviour {
 
 
         // MID RAY 2.5F
-        if (Physics.Raycast(cube, agent.transform.TransformDirection(Vector3.forward), out hit, 2.5f))
+        if (Physics.Raycast(cube, agent.transform.TransformDirection(Vector3.forward), out hit, 3f))
         {
-            Debug.DrawRay(cube, transform.TransformDirection(Vector3.forward) * 2.5f, Color.yellow);
+            Debug.DrawRay(cube, transform.TransformDirection(Vector3.forward) * 3f, Color.yellow);
             //Debug.Log("Hit " + hit.transform.name);
             agent.DrawCircle(hit.point, 1f);
             //Part 2 ConeCheck
@@ -622,7 +624,7 @@ public class SteeringBehavior : MonoBehaviour {
         if (Physics.Raycast(cube, right, out rightHit, 2.5f))
         {
             Debug.DrawRay(cube, right * 2.5f, Color.green);
-            Debug.Log("Hit " + rightHit.transform.name);
+            //Debug.Log("Hit " + rightHit.transform.name);
             agent.DrawCircle(rightHit.point, 1f);
             //Part 2 ConeCheck
             if (stateController.statenum == 2 && stateController.CorP == 0)
