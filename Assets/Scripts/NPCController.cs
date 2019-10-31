@@ -64,7 +64,7 @@ public class NPCController : MonoBehaviour {
                 orientation = transform.eulerAngles.y;
                 //rotation = orientation;
                 angular = ai.Align();
-                Debug.Log("Angular " + orientation);
+                //Debug.Log("Angular " + orientation);
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;

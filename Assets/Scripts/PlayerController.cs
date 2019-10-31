@@ -28,8 +28,17 @@ public class PlayerController : MonoBehaviour {
     /// useful later on.
     /// </summary>
     void FixedUpdate() {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+            transform.eulerAngles = new Vector3(0, Quaternion.FromToRotation(Vector3.forward, movement).eulerAngles.y, 0);
+            rb.AddForce(movement * speed);
+        }
+
+        /*
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        */
 
 
         // This simply moves the avatar based on arrow keys.
@@ -39,9 +48,9 @@ public class PlayerController : MonoBehaviour {
         //this.transform.position = new Vector3(transform.position.x + speed * moveHorizontal, 1, transform.position.z + speed * moveVertical);
 
         // This is the physics based movement used in earlier assignments, not needed here.
-        Vector3 movement = new Vector3(moveHorizontal, 1f, moveVertical);
+        //Vector3 movement = new Vector3(moveHorizontal, 1f, moveVertical);
         //Debug.Log("movement " + movement);
-        rb.AddForce(movement * speed);
+        //rb.AddForce(movement * speed);
     }
 
 
