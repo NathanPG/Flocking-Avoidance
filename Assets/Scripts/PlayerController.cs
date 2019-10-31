@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     void FixedUpdate() {
         orientation = transform.eulerAngles.y;
+        transform.eulerAngles = new Vector3(0, Quaternion.FromToRotation(Vector3.forward, rb.velocity).eulerAngles.y, 0);
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
             Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;

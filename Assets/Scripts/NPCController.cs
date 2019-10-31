@@ -65,7 +65,7 @@ public class NPCController : MonoBehaviour {
                 //rotation = transform.rotation;
                 //rotation = orientation;
                 //rotation = 
-                angular = ai.Align();
+                //angular = ai.Align();
                 //rotation = orientation;
                 //Debug.Log("Angular " + orientation);
                 // linear = ai.whatever();  -- replace with the desired calls

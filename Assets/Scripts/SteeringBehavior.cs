@@ -50,9 +50,9 @@ public class SteeringBehavior : MonoBehaviour {
     //public GameObject[] bird_group1;
     //public GameObject[] bird_group2;
 
-    public float centerWeight = .10f;
-    public float velocityWeight = .65f;
-    public float flockWeight = .25f;
+    float centerWeight = .5f;
+    float velocityWeight = 1.2f;
+    float flockWeight = 2.5f;
 
     public Vector3 averageVelocity = Vector3.zero;
     public Vector3 centerPoint = Vector3.zero;
@@ -189,10 +189,12 @@ public class SteeringBehavior : MonoBehaviour {
         averageVelocity = flockVelocity;
         centerPoint = center;
         leaderVelocity = gameObject.GetComponent<Rigidbody>().velocity;
+        //agent.DrawConcentricCircle(4f);
     }
 
     public Vector3 LeaderPath()
     {
+        //agent.DrawConcentricCircle(2f);
         stateController = GameObject.FindGameObjectWithTag("GameController").GetComponent<StateController>();
         if (stateController.statenum == 3)
         {
@@ -251,6 +253,31 @@ public class SteeringBehavior : MonoBehaviour {
         {
             direction = Path3[current].transform.position;
         }
+        Debug.Log("Path point " + direction);
+
+        /*float dist = (direction - agent.position).magnitude;
+        //get current agent speed
+        float speed = agent.velocity.magnitude;
+
+        float prediction = 0f;
+        //if the speed is not enough to reach the target with max prediction time
+        if (speed <= dist / maxPrediction)
+        {
+            prediction = maxPrediction;
+        }
+        //if current speed is enough to reach the target with max prediction time
+        else
+        {
+            prediction = dist / speed;
+        }
+        //Draw prediction circle
+        agent.DrawCircle(direction * prediction, 1f);
+        //Get direction vector with prediction
+        Vector3 linear_acc = (direction * prediction) - agent.position;
+        linear_acc.Normalize();
+        //Get linear acceleration and return
+        linear_acc *= maxAcceleration;
+        return linear_acc;*/
 
         Vector3 linear_acc = direction - agent.position;
         linear_acc.Normalize();
@@ -299,7 +326,7 @@ public class SteeringBehavior : MonoBehaviour {
     public Vector3 FollowLeader()
     {
         Vector3 separation = CheckFlockMembers();
-        Vector3 leaderVelocity = target.GetComponent<SteeringBehavior>().leaderVelocity;
+        Vector3 leaderVelocity = CalcVelocity(target.transform.position, 1);
         centerPoint = target.GetComponent<SteeringBehavior>().centerPoint;
 
         Vector3 moveToCenter = CalcVelocity(centerPoint, 1);
@@ -320,17 +347,17 @@ public class SteeringBehavior : MonoBehaviour {
         //Debug.Log("Center " + moveToCenter);
         //Debug.Log("Separation " + separation);
 
-        if (target.GetComponent<Rigidbody>().velocity == Vector3.zero)
+        /*if (target.GetComponent<Rigidbody>().velocity == Vector3.zero)
         {
             //Debug.Log("Leader " + leaderVelocity);
             return Vector3.zero;
-        }
+        }*/
 
-        if (weightedVelocity.magnitude > maxAcceleration)
+        /*if (weightedVelocity.magnitude > maxAcceleration)
         {
             weightedVelocity.Normalize();
             weightedVelocity *= maxAcceleration;
-        }
+        }*/
 
         return weightedVelocity;
     }
@@ -565,10 +592,11 @@ public class SteeringBehavior : MonoBehaviour {
         // MID RAY 2.5F
         if (Physics.Raycast(cube, agent.transform.TransformDirection(Vector3.forward), out hit, 2.5f))
         {
-            //Debug.DrawRay(cube, transform.TransformDirection(Vector3.forward) * 2.5f, Color.yellow);
-
+            Debug.DrawRay(cube, transform.TransformDirection(Vector3.forward) * 2.5f, Color.yellow);
+            //Debug.Log("Hit " + hit.transform.name);
+            agent.DrawCircle(hit.point, 1f);
             //Part 2 ConeCheck
-            if(stateController.statenum == 2 && stateController.CorP == 0)
+            if (stateController.statenum == 2 && stateController.CorP == 0)
             {
                 if(this.gameObject.tag == "B1" && hit.transform.tag == "B2")
                 {
@@ -593,8 +621,9 @@ public class SteeringBehavior : MonoBehaviour {
         // 1/4 RIGHT RAY 2.5F
         if (Physics.Raycast(cube, right, out rightHit, 2.5f))
         {
-            //Debug.DrawRay(cube, right * 2.5f, Color.green);
-
+            Debug.DrawRay(cube, right * 2.5f, Color.green);
+            Debug.Log("Hit " + rightHit.transform.name);
+            agent.DrawCircle(rightHit.point, 1f);
             //Part 2 ConeCheck
             if (stateController.statenum == 2 && stateController.CorP == 0)
             {
@@ -624,7 +653,7 @@ public class SteeringBehavior : MonoBehaviour {
         // 1/4 LEFT RAY 2.5F
         if (Physics.Raycast(cube, left, out leftHit, 2.5f))
         {
-            //Debug.DrawRay(cube, left * 2.5f, Color.blue);
+            Debug.DrawRay(cube, left * 2.5f, Color.blue);
 
             //Part 2 ConeCheck
             if (stateController.statenum == 2 && stateController.CorP == 0)
@@ -654,7 +683,7 @@ public class SteeringBehavior : MonoBehaviour {
         // 1/2.3 LEFT SHORT RAY 0.75
         if (Physics.Raycast(cube, ls, out lsHit0, 0.75f))
         {
-            //Debug.DrawRay(cube, ls * 2.5f, Color.cyan);
+            Debug.DrawRay(cube, ls * .75f, Color.cyan);
 
             //Part 2 ConeCheck
             if (stateController.statenum == 2 && stateController.CorP == 0)
@@ -683,7 +712,7 @@ public class SteeringBehavior : MonoBehaviour {
         // 1/2.3 RIGHT SHORT RAY 0.75
         if (Physics.Raycast(cube, rs, out rsHit0, 0.75f))
         {
-            //Debug.DrawRay(cube, rs * 2.5f, Color.grey);
+            Debug.DrawRay(cube, rs * .75f, Color.grey);
 
             //Part 2 ConeCheck
             if (stateController.statenum == 2 && stateController.CorP == 0)
@@ -761,7 +790,7 @@ public class SteeringBehavior : MonoBehaviour {
         */
         if (Physics.Raycast(cube, leftsidedirect, out lsideHit, 1f))
         {
-            //Debug.DrawRay(cube, leftsidedirect * 1f, Color.blue);
+            Debug.DrawRay(cube, leftsidedirect * 1f, Color.blue);
             if (lsideHit.transform.tag == "Obstacle" && stateController.statenum == 3)
             {
                 agent.DrawCircle(lsideHit.point, 1f);
@@ -770,7 +799,7 @@ public class SteeringBehavior : MonoBehaviour {
         }
         if (Physics.Raycast(cube, rightsidedirect, out rsideHit, 1f))
         {
-            //Debug.DrawRay(cube, rightsidedirect * 1f, Color.blue);
+            Debug.DrawRay(cube, rightsidedirect * 1f, Color.blue);
             if (rsideHit.transform.tag == "Obstacle" && stateController.statenum == 3)
             {
                 agent.DrawCircle(lsideHit.point, 1f);
@@ -905,7 +934,7 @@ public class SteeringBehavior : MonoBehaviour {
 
     public Vector3 CheckFlockMembers()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
         Vector3 average = Vector3.zero;
         int count = 0;
         if (hitColliders.Length == 0)
@@ -918,13 +947,21 @@ public class SteeringBehavior : MonoBehaviour {
             for (int j = 0; j < hitColliders.Length; j++)
             {
                 //Debug.Log("Collider " + hitColliders[j].transform.name);
-                if (hitColliders[j].transform.name == "Ground" || hitColliders[j].transform.name == "Collider Cube") 
+                if (hitColliders[j].transform.name == "Ground" || hitColliders[j].transform.name == "Cube" || hitColliders[j].transform.name == "Obstacle") 
                 {
                     continue;
                 }
                 if (hitColliders[j].transform.position != agent.transform.position && hitColliders[j].transform == flock[i].transform)
                 {
-                    //Debug.Log("Collider " + hitColliders[i].transform.name);
+                    if (average == Vector3.zero)
+                    {
+                        average = hitColliders[j].transform.position;
+                    }
+                    else if (IsCloser(hitColliders[j].transform.position, average))
+                    {
+                        average = hitColliders[j].transform.position;
+                    }
+                    //Debug.Log("Collider " + hitColliders[j].transform.name);
                     average += hitColliders[j].transform.position;
                     count++;
                 }
@@ -937,8 +974,16 @@ public class SteeringBehavior : MonoBehaviour {
         }
         else
         {
-            return average / count;
+            return average;
         }
+    }
+    public bool IsCloser(Vector3 other, Vector3 old)
+    {
+        if ((agent.transform.position - other).magnitude > (agent.transform.position - old).magnitude)
+        {
+            return false;
+        }
+        return true;
     }
     public Vector3 CalcVelocity(Vector3 direction, int num)
     {
