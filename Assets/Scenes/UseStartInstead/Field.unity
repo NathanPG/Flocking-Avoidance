@@ -238,6 +238,7 @@ MonoBehaviour:
     type: 3}
   BirdKingPrefab: {fileID: 1195697530455450, guid: 0fcd3077ea816ff4d9388e7425919d2b,
     type: 3}
+  RedPrefab: {fileID: 1539762189271892, guid: a4c4224164306c24e886b5cb60a7d09c, type: 3}
   player: {fileID: 1539762287959409}
   spawner1: {fileID: 12566444}
   SpawnText1: {fileID: 0}
@@ -2068,14 +2069,13 @@ MonoBehaviour:
   wanderRate: 0
   Path1: []
   Path2: []
+  Path3: []
   current: 0
   flock: []
-  centerWeight: 0.2
-  velocityWeight: 0.15
-  flockWeight: 0.75
   averageVelocity: {x: 0, y: 0, z: 0}
   centerPoint: {x: 0, y: 0, z: 0}
   leaderVelocity: {x: 0, y: 0, z: 0}
+  distFloat: 100
 --- !u!1 &1918385611750465
 GameObject:
   m_ObjectHideFlags: 0

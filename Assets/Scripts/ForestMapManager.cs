@@ -84,6 +84,7 @@ public class ForestMapManager : MonoBehaviour {
         //SPAWN FIRST LEADER BIRD. spawnedNPCs[0]
         spawner1.transform.position = new Vector3(5, 1, 13);
         GameObject BirdKing = SpawnItem(spawner1, BirdKingPrefab, null, SpawnText1, 3);
+        BirdKing.transform.position = new Vector3(5f, 1f, 12f);
         BirdKing.tag = "BK3";
         spawnedNPCs.Add(BirdKing);
         //SPAWNING FIRST GROUP OF BIRDS. spawnedNPCs[1,2,3,4,5]

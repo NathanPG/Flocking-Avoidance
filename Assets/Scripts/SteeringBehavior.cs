@@ -372,9 +372,28 @@ public class SteeringBehavior : MonoBehaviour {
         //PART 3 AVOID
         if(stateController.statenum == 3)
         {
+            if ((l && r && mid))
+            {
+                Vector3 newTarget = hit.point + new Vector3(distFloat, 0, distFloat);
+                //agent.DrawCircle(hit.point, .5f);
+                newTarget.Normalize();
+                newTarget *= maxAcceleration;
+                //Debug.Log("3 hits");
+                ResetBools();
+                agent.velocity = Vector3.zero;
+                if (lastLeft)
+                {
+                    agent.rotation = 4;
+                }
+                else
+                {
+                    agent.rotation = -4;
+                }
+                return newTarget;
 
+            }
             //For left and right or left, middle and right collisions
-            if ((l && r && mid) || (l && r) || (ls0 && mid) || (rs0 && mid) || (rs0 && ls0))
+            if ((l && r) || (ls0 && mid) || (rs0 && mid) || (rs0 && ls0))
             {
                 Vector3 newTarget = hit.point + new Vector3(distFloat, 0, distFloat);
                 //agent.DrawCircle(hit.point, .5f);
@@ -837,6 +856,8 @@ public class SteeringBehavior : MonoBehaviour {
         if (avoidIt)
         {
             avoidIt = false;
+            //Vector3 separation = CheckFlockMembers();
+            //Debug.Log("Separation (ray) " + separation);
             return avoidance;
         }
         else
@@ -851,7 +872,9 @@ public class SteeringBehavior : MonoBehaviour {
         if (avoidIt)
         {
             avoidIt = false;
-            return avoidance;
+            Vector3 separation = CheckFlockMembers();
+            //Debug.Log("Separation (cone) " + separation);
+            return avoidance + separation;
         }
         else
         {
@@ -885,12 +908,18 @@ public class SteeringBehavior : MonoBehaviour {
                 closest_time = predict_time;
             }
         }
-        Debug.Log("Closest Collision Time: "+ closest_time);
+        //Debug.Log("Closest Collision Time: "+ closest_time);
         if (closest_time < 1f && closest_time > 0)
         {
             //AVOID
             Vector3 newTarget = agent.position + closest_time * agent.velocity + new Vector3(5f, 0, 5f);
             agent.DrawCircle(newTarget, 0.5f);
+
+            Vector3 separation = CheckFlockMembers();
+
+            newTarget += separation;
+            //Debug.Log("Separation " + separation);
+
             newTarget.Normalize();
             newTarget *= maxAcceleration;
             ResetBools();
@@ -935,19 +964,19 @@ public class SteeringBehavior : MonoBehaviour {
 
     public Vector3 CheckFlockMembers()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f);
         Vector3 average = Vector3.zero;
         int count = 0;
         if (hitColliders.Length == 0)
         {
             return Vector3.zero;
         }
-        List<Transform> closeColliders = new List<Transform>();
+        //List<Transform> closeColliders = new List<Transform>();
         for (int i = 0; i < flock.Length; i++)
         {
             for (int j = 0; j < hitColliders.Length; j++)
             {
-                //Debug.Log("Collider " + hitColliders[j].transform.name);
+                //Debug.Log("Collider " + hitColliders[j].transform.position);
                 if (hitColliders[j].transform.name == "Ground" || hitColliders[j].transform.name == "Cube" || hitColliders[j].transform.name == "Obstacle") 
                 {
                     continue;
@@ -966,9 +995,9 @@ public class SteeringBehavior : MonoBehaviour {
                     average += hitColliders[j].transform.position;
                     count++;
                 }
+                //Debug.Log("average " + average);
             }
         }
-        //Debug.Log("average " + average);
         if (average == Vector3.zero)
         {
             return Vector3.zero;
