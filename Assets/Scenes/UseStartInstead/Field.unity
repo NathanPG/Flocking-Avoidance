@@ -552,7 +552,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.712e-42, y: 1.02e-43, z: 1e-45, w: 0}
+  m_BoundingSphereOverride: {x: NaN, y: 0, z: 1.01e-43, w: -530125820}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1091,11 +1091,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1,2,3 to switch states
-
-    S to start
-
-    R to reset'
+  m_Text: 
 --- !u!222 &746086919
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2068,6 +2064,7 @@ MonoBehaviour:
   wanderRate: 0
   Path1: []
   Path2: []
+  Path3: []
   current: 0
   flock: []
   centerWeight: 0.2

@@ -736,7 +736,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.3509887e-38, y: 512, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: -6024104, z: 7.44e-43, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1417,7 +1417,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Scene
+  m_Text: 
 --- !u!222 &746086919
 CanvasRenderer:
   m_ObjectHideFlags: 0

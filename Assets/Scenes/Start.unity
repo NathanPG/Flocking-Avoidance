@@ -468,7 +468,7 @@ MonoBehaviour:
 
     Click S to start
 
-    Click R to reload'
+    Click S the second time to restart'
 --- !u!222 &1112325397
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -509,6 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statenum: 0
   CorP: 0
+  isStart: 0
 --- !u!114 &1261079700
 MonoBehaviour:
   m_ObjectHideFlags: 0
