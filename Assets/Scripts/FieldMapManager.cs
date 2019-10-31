@@ -192,7 +192,15 @@ public class FieldMapManager : MonoBehaviour {
             }
             if (inputstring[0] == 'R' | inputstring[0] == 'r')
             {
-                stateController.LoadTwo();
+                if (stateController.statenum == 1)
+                {
+                    stateController.LoadOne();
+                }
+                else
+                {
+                    stateController.LoadTwo();
+                }
+                    
             }
             if((inputstring[0] == 'C' | inputstring[0] == 'c') && stateController.statenum == 2)
             {
